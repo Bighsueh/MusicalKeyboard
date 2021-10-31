@@ -18,8 +18,16 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
 import java.security.Key;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import tw.edu.nfu.gm.hsueh.musicalkeyboard.MainActivity;
 import tw.edu.nfu.gm.hsueh.musicalkeyboard.R;
 
@@ -30,6 +38,8 @@ public class KeyboardsFragment extends Fragment {
     private MediaPlayer mp1, mp2, mp3, mp4, mp5, mp6, mp7, mp8, mp9, mp10;
     private Boolean on_record = false;
     private String melody, temp_melody;
+    // 建立OkHttpClient
+    OkHttpClient client = new OkHttpClient().newBuilder().build();
 
     private class Data {
         int id;
@@ -42,9 +52,9 @@ public class KeyboardsFragment extends Fragment {
         keyboardsViewModel = new ViewModelProvider(this).get(KeyboardsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_keyboard, container, false);
 
-        Button btn_record = (Button)root.findViewById(R.id.btn_record);
-        Button btn_replay = (Button)root.findViewById(R.id.btn_replay);
-        Button btn_upload = (Button)root.findViewById(R.id.btn_upload);
+        Button btn_record = (Button) root.findViewById(R.id.btn_record);
+        Button btn_replay = (Button) root.findViewById(R.id.btn_replay);
+        Button btn_upload = (Button) root.findViewById(R.id.btn_upload);
 
         //數字代號對應的檔名：
         //1->turmpetc
@@ -154,15 +164,15 @@ public class KeyboardsFragment extends Fragment {
         btn_record.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                        if (btn_record.getText() == "RECORD") {
-                            on_record = true;
-                            temp_melody = "";
-                            btn_record.setText("RECORDING");
-                        }else{
-                            on_record = false;
-                            melody = temp_melody;
-                            btn_record.setText("RECORD");
-                        }
+                if (btn_record.getText() == "RECORD") {
+                    on_record = true;
+                    temp_melody = "";
+                    btn_record.setText("RECORDING");
+                } else {
+                    on_record = false;
+                    melody = temp_melody;
+                    btn_record.setText("RECORD");
+                }
             }
         });
         btn_replay.setOnClickListener(new View.OnClickListener() {
@@ -178,7 +188,32 @@ public class KeyboardsFragment extends Fragment {
         btn_upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (melody != "") {
+                    String url = "http://140.130.36.85/api/" + melody;
+                    // 建立Request，設置連線資訊
+                    Request request = new Request.Builder()
+                            .url(url)
+                            .build();
 
+                    // 建立Call
+                    Call call = client.newCall(request);
+
+                    // 執行Call連線到網址
+                    call.enqueue(new Callback() {
+
+
+                        @Override
+                        public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                            Log.d("response:", response.body().string());
+                        }
+
+                        @Override
+                        public void onFailure(@NotNull Call call, @NotNull IOException e) {
+
+                        }
+
+                    });
+                }
             }
         });
 
