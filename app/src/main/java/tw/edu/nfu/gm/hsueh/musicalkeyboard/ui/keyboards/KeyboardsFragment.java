@@ -1,9 +1,11 @@
 package tw.edu.nfu.gm.hsueh.musicalkeyboard.ui.keyboards;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,6 +20,12 @@ public class KeyboardsFragment extends Fragment {
 
     private KeyboardsViewModel keyboardsViewModel;
 
+    private class Data{
+        int id;
+        String name;
+        String melody;
+    }
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         keyboardsViewModel =
@@ -27,7 +35,7 @@ public class KeyboardsFragment extends Fragment {
         keyboardsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
-                textView.setText(s);
+//                textView.setText(s);
             }
         });
         return root;
