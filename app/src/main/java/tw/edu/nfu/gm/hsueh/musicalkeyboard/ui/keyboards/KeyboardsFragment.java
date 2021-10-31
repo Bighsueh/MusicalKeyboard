@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,7 +28,8 @@ public class KeyboardsFragment extends Fragment {
     private Button musicbutton1, musicbutton2, musicbutton3, musicbutton4, musicbutton5, musicbutton6, musicbutton7, musicbutton8, musicbutton9, musicbutton10;
     private KeyboardsViewModel keyboardsViewModel;
     private MediaPlayer mp1, mp2, mp3, mp4, mp5, mp6, mp7, mp8, mp9, mp10;
-
+    private Boolean on_record = false;
+    private String melody, temp_melody;
 
     private class Data {
         int id;
@@ -39,6 +41,11 @@ public class KeyboardsFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         keyboardsViewModel = new ViewModelProvider(this).get(KeyboardsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_keyboard, container, false);
+
+        Button btn_record = (Button)root.findViewById(R.id.btn_record);
+        Button btn_replay = (Button)root.findViewById(R.id.btn_replay);
+        Button btn_upload = (Button)root.findViewById(R.id.btn_upload);
+
         //數字代號對應的檔名：
         //1->turmpetc
         //2->turmpetd
@@ -76,80 +83,102 @@ public class KeyboardsFragment extends Fragment {
         musicbutton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                temp_melody += "1";
                 mp1.start();
             }
         });
-
         musicbutton2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                temp_melody += "2";
                 mp2.start();
             }
         });
-
         musicbutton3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                temp_melody += "3";
                 mp3.start();
             }
         });
-
         musicbutton4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                temp_melody += "4";
                 mp4.start();
             }
         });
-
         musicbutton5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                temp_melody += "5";
                 mp5.start();
             }
         });
-
         musicbutton6.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                temp_melody += "6";
                 mp6.start();
             }
         });
-
         musicbutton7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                temp_melody += "7";
                 mp7.start();
             }
         });
-
         musicbutton8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                temp_melody += "8";
                 mp8.start();
             }
         });
-
         musicbutton9.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                temp_melody += "9";
                 mp9.start();
             }
         });
-
         musicbutton10.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                temp_melody += "0";
                 mp10.start();
+            }
+        });
+
+        btn_record.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                        if (btn_record.getText() == "RECORD") {
+                            on_record = true;
+                            temp_melody = "";
+                            btn_record.setText("RECORDING");
+                        }else{
+                            on_record = false;
+                            melody = temp_melody;
+                            btn_record.setText("RECORD");
+                        }
+            }
+        });
+        btn_replay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast toast = Toast.makeText(
+                        root.getContext(),
+                        melody,
+                        Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        });
+        btn_upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
             }
         });
 
@@ -157,12 +186,12 @@ public class KeyboardsFragment extends Fragment {
             @Override
             public void onChanged(@Nullable String s) {
 //                textView.setText(s);
-                Log.d("start", "123");
+
+
             }
         });
         return root;
     }
-
 
 
 }
