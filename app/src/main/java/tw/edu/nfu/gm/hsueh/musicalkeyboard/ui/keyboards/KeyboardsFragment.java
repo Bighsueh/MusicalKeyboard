@@ -1,8 +1,10 @@
 package tw.edu.nfu.gm.hsueh.musicalkeyboard.ui.keyboards;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,7 +26,7 @@ public class KeyboardsFragment extends Fragment {
 
     private Button musicbutton1, musicbutton2, musicbutton3, musicbutton4, musicbutton5, musicbutton6, musicbutton7, musicbutton8, musicbutton9, musicbutton10;
     private KeyboardsViewModel keyboardsViewModel;
-    private MediaPlayer mp1, mp2, mp3, mp4, mp5, mp6, mp7, mp8, mp9, p10;
+    private MediaPlayer mp1, mp2, mp3, mp4, mp5, mp6, mp7, mp8, mp9, mp10;
 
 
     private class Data {
@@ -71,30 +73,96 @@ public class KeyboardsFragment extends Fragment {
         musicbutton9 = (Button) root.findViewById(R.id.musicbutton9);
         musicbutton10 = (Button) root.findViewById(R.id.musicbutton10);
 
+        musicbutton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                mp1.start();
+            }
+        });
 
-//        mp1.start();
-//        mp2.start();
-//        mp3.start();
-//        mp4.start();
-//        mp5.start();
-//        mp6.start();
-//        mp7.start();
-//        mp8.start();
-//        mp9.start();
-//        mp10.start();
+        musicbutton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                mp2.start();
+            }
+        });
 
+        musicbutton3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                mp3.start();
+            }
+        });
 
+        musicbutton4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mp4.start();
+            }
+        });
+
+        musicbutton5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mp5.start();
+            }
+        });
+
+        musicbutton6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mp6.start();
+            }
+        });
+
+        musicbutton7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mp7.start();
+            }
+        });
+
+        musicbutton8.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mp8.start();
+            }
+        });
+
+        musicbutton9.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mp9.start();
+            }
+        });
+
+        musicbutton10.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mp10.start();
+            }
+        });
 
         keyboardsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
 //                textView.setText(s);
+                Log.d("start", "123");
             }
         });
         return root;
     }
+
+
 
 }

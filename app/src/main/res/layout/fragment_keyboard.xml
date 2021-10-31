@@ -79,18 +79,6 @@
         app:layout_constraintVertical_bias="0.334" />
 
     <Button
-        android:id="@+id/musicbutton2"
-        android:layout_width="110dp"
-        android:layout_height="110dp"
-        android:text="2D"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.512" />
-
-    <Button
         android:id="@+id/musicbutton3"
         android:layout_width="110dp"
         android:layout_height="110dp"
@@ -100,19 +88,19 @@
         app:layout_constraintHorizontal_bias="0.936"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.512" />
+        app:layout_constraintVertical_bias="0.531" />
 
     <Button
-        android:id="@+id/musicbutton1"
+        android:id="@+id/musicbutton2"
         android:layout_width="110dp"
         android:layout_height="110dp"
-        android:text="1C"
+        android:text="2D"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.053"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.512" />
+        app:layout_constraintVertical_bias="0.531" />
 
     <Button
         android:id="@+id/musicbutton10"
@@ -124,6 +112,18 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.708" />
+        app:layout_constraintVertical_bias="0.727" />
+
+    <Button
+        android:id="@+id/musicbutton1"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:text="1C"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.053"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.531" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
