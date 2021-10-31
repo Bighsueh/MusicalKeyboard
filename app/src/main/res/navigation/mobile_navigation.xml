@@ -18,8 +18,8 @@
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="tw.edu.nfu.gm.hsueh.musicalkeyboard.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_keyboard"
+        android:name="tw.edu.nfu.gm.hsueh.musicalkeyboard.ui.keyboards.KeyboardsFragment"
+        android:label="@string/title_keyboard"
+        tools:layout="@layout/fragment_keyboard" />
 </navigation>

@@ -1,4 +1,4 @@
-package tw.edu.nfu.gm.hsueh.musicalkeyboard.ui.notifications;
+package tw.edu.nfu.gm.hsueh.musicalkeyboard.ui.keyboards;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,17 +14,17 @@ import androidx.lifecycle.ViewModelProvider;
 
 import tw.edu.nfu.gm.hsueh.musicalkeyboard.R;
 
-public class NotificationsFragment extends Fragment {
+public class KeyboardsFragment extends Fragment {
 
-    private NotificationsViewModel notificationsViewModel;
+    private KeyboardsViewModel keyboardsViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        notificationsViewModel =
-                new ViewModelProvider(this).get(NotificationsViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_notifications, container, false);
-        final TextView textView = root.findViewById(R.id.text_notifications);
-        notificationsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
+        keyboardsViewModel =
+                new ViewModelProvider(this).get(KeyboardsViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_keyboard, container, false);
+        final TextView textView = root.findViewById(R.id.text_keyboards);
+        keyboardsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
