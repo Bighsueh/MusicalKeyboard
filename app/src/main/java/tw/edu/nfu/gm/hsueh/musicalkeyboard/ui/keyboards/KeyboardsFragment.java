@@ -181,7 +181,7 @@ public class KeyboardsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(melody!=""){
-                    String url = "https://c91a-2001-288-6004-36-6c9e-f855-de1f-69c3.ngrok.io/api/";
+                    String url = "https://f7ac-2001-288-6004-36-6c9e-f855-de1f-69c3.ngrok.io/api/";
                     url += melody;
                     // 建立Request，設置連線資訊
                     Request request = new Request.Builder()

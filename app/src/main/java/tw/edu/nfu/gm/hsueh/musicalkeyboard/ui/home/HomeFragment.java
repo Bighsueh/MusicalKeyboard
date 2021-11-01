@@ -67,9 +67,11 @@ public class HomeFragment extends Fragment {
         rcv_music.setAdapter(mAdapter);
 
 
-
-
-
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return root;
     }
 
@@ -79,7 +81,7 @@ public class HomeFragment extends Fragment {
     private void cData(){
 
         Request request = new Request.Builder()
-                .url("https://c91a-2001-288-6004-36-6c9e-f855-de1f-69c3.ngrok.io/api/getMelody")
+                .url("https://f7ac-2001-288-6004-36-6c9e-f855-de1f-69c3.ngrok.io/api/getMelody")
                 .build();
 
         // 建立Call
@@ -103,10 +105,12 @@ public class HomeFragment extends Fragment {
                 result = result.replace("\"id\":","");
                 result = result.replace("\"name\":","");
                 result = result.replace("\"melody\":","");
+                result = result.replace("\"","");
                 Log.d("OkHttp result",result);
                 String[] str = result.split(";");
                 for(String s:str){
                     String[] ss = s.split(",");
+                    Log.d("OkHttp result",ss[0]);
                     Data d = new Data(Integer.parseInt(ss[0]),ss[1],ss[2]);
                     testData.add(d);
                 }
