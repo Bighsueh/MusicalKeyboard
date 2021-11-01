@@ -30,16 +30,18 @@ import okhttp3.Request;
 import okhttp3.Response;
 import tw.edu.nfu.gm.hsueh.musicalkeyboard.R;
 
-class Data{
+class Data {
     int id;
     String name;
     String melody;
-    public Data(int i,String n,String m){
+
+    public Data(int i, String n, String m) {
         id = i;
         name = n;
         melody = m;
     }
 }
+
 public class HomeFragment extends Fragment {
 
     private HomeViewModel homeViewModel;
@@ -68,7 +70,7 @@ public class HomeFragment extends Fragment {
 
 
         try {
-            Thread.sleep(3000);
+            Thread.sleep(2000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -78,7 +80,7 @@ public class HomeFragment extends Fragment {
     OkHttpClient client = new OkHttpClient().newBuilder().build();
 
 
-    private void cData(){
+    private void cData() {
 
         Request request = new Request.Builder()
                 .url("https://f7ac-2001-288-6004-36-6c9e-f855-de1f-69c3.ngrok.io/api/getMelody")
@@ -97,21 +99,21 @@ public class HomeFragment extends Fragment {
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 String result = response.body().string();
                 Log.d("OkHttp result", result);
-                result = result.replace("[","");
-                result = result.replace("]","");
-                result = result.replace("},{",";");
-                result = result.replace("}","");
-                result = result.replace("{","");
-                result = result.replace("\"id\":","");
-                result = result.replace("\"name\":","");
-                result = result.replace("\"melody\":","");
-                result = result.replace("\"","");
-                Log.d("OkHttp result",result);
+                result = result.replace("[", "");
+                result = result.replace("]", "");
+                result = result.replace("},{", ";");
+                result = result.replace("}", "");
+                result = result.replace("{", "");
+                result = result.replace("\"id\":", "");
+                result = result.replace("\"name\":", "");
+                result = result.replace("\"melody\":", "");
+                result = result.replace("\"", "");
+                Log.d("OkHttp result", result);
                 String[] str = result.split(";");
-                for(String s:str){
+                for (String s : str) {
                     String[] ss = s.split(",");
-                    Log.d("OkHttp result",ss[0]);
-                    Data d = new Data(Integer.parseInt(ss[0]),ss[1],ss[2]);
+                    Log.d("OkHttp result", ss[0]);
+                    Data d = new Data(Integer.parseInt(ss[0]), ss[1], ss[2]);
                     testData.add(d);
                 }
 
@@ -125,11 +127,11 @@ public class HomeFragment extends Fragment {
     private class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
 
-
         public class MyViewHolder extends RecyclerView.ViewHolder {
             public View itemView;
             public TextView name;
             public ImageButton play;
+
             public MyViewHolder(@NonNull View v) {
                 super(v);
                 itemView = v;
@@ -138,12 +140,13 @@ public class HomeFragment extends Fragment {
 
             }
         }
+
         @NonNull
         @Override
         public MyAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
             View item_music = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.row_music,parent,false);
+                    .inflate(R.layout.row_music, parent, false);
 
             MyViewHolder item = new MyViewHolder(item_music);
 
@@ -153,7 +156,6 @@ public class HomeFragment extends Fragment {
         @Override
         public void onBindViewHolder(@NonNull MyAdapter.MyViewHolder holder, int position) {
             holder.name.setText(String.valueOf(testData.get(position).name));
-
 
 
             holder.play.setOnClickListener(new View.OnClickListener() {
@@ -172,36 +174,33 @@ public class HomeFragment extends Fragment {
         }
 
 
-
     }
 
-    int[] raw_music = {R.raw.turmpetc,R.raw.turmpetd,R.raw.turmpete
-            ,R.raw.turmpetf,R.raw.turmpetg,R.raw.turmpeta,R.raw.turmpetb,R.raw.turmpet0c,R.raw.turmpet0d,R.raw.turmpet0e};
-    public void play_music(String s){
+    int[] raw_music = {R.raw.turmpetc, R.raw.turmpetd, R.raw.turmpete
+            , R.raw.turmpetf, R.raw.turmpetg, R.raw.turmpeta, R.raw.turmpetb, R.raw.turmpet0c, R.raw.turmpet0d, R.raw.turmpet0e};
+
+    public void play_music(String s) {
         int slen = s.length();
 
-       int count = 0;
-       for (int i = 0;i<slen;i++){
-           MediaPlayer player = MediaPlayer.create(getContext()
-                   ,raw_music[Integer.parseInt(String.valueOf(s.charAt(i)))]);
+        int count = 0;
+        for (int i = 0; i < slen; i++) {
+            MediaPlayer player = MediaPlayer.create(getContext()
+                    , raw_music[Integer.parseInt(String.valueOf(s.charAt(i)))]);
             player.start();
-            do{
+            do {
                 player.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                     @Override
                     public void onPrepared(MediaPlayer mediaPlayer) {
 
                     }
                 });
-            }while (player.isPlaying());
-           player.stop();
-           player.release();
-       }
+            } while (player.isPlaying());
+            player.stop();
+            player.release();
+        }
 
 
     }
-
-
-
 
 
 }
