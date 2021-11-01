@@ -36,7 +36,6 @@ public class KeyboardsFragment extends Fragment {
     private Button musicbutton1, musicbutton2, musicbutton3, musicbutton4, musicbutton5, musicbutton6, musicbutton7, musicbutton8, musicbutton9, musicbutton10;
     private KeyboardsViewModel keyboardsViewModel;
     private MediaPlayer mp1, mp2, mp3, mp4, mp5, mp6, mp7, mp8, mp9, mp10;
-    private Boolean on_record = false;
     private String melody, temp_melody;
     // 建立OkHttpClient
     OkHttpClient client = new OkHttpClient().newBuilder().build();
@@ -165,11 +164,9 @@ public class KeyboardsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (btn_record.getText() == "RECORD") {
-                    on_record = true;
                     temp_melody = "";
                     btn_record.setText("RECORDING");
                 } else {
-                    on_record = false;
                     melody = temp_melody;
                     btn_record.setText("RECORD");
                 }
