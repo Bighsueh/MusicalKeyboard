@@ -13,8 +13,8 @@
         android:id="@+id/tv_musicname"
         android:layout_weight="1"
         android:gravity="center"/>
-    <Button
-        android:layout_width="wrap_content"
+    <ImageButton
+        android:layout_width="30pt"
         android:layout_height="match_parent"
         android:background="@drawable/ic_baseline_play_arrow_24"
         android:id="@+id/btn_musicplay"/>

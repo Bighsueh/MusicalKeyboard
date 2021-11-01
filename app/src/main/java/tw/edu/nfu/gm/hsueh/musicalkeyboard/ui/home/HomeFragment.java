@@ -1,19 +1,33 @@
 package tw.edu.nfu.gm.hsueh.musicalkeyboard.ui.home;
 
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 import tw.edu.nfu.gm.hsueh.musicalkeyboard.R;
 
 class Data{
@@ -58,13 +72,51 @@ public class HomeFragment extends Fragment {
 
         return root;
     }
+
+    OkHttpClient client = new OkHttpClient().newBuilder().build();
+
+
     private void cData(){
-        testData = new LinkedList<>();
-        for(int i=0;i<10;i++){
-            Data d = new Data(i,String.valueOf(Math.random()),String.valueOf(Math.random()));
-            testData.add(d);
-        }
+
+        Request request = new Request.Builder()
+                .url("https://c91a-2001-288-6004-36-6c9e-f855-de1f-69c3.ngrok.io/api/getMelody")
+                .build();
+
+        // 建立Call
+        Call call = client.newCall(request);
+
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+//                failed
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                String result = response.body().string();
+                Log.d("OkHttp result", result);
+                result = result.replace("[","");
+                result = result.replace("]","");
+                result = result.replace("},{",";");
+                result = result.replace("}","");
+                result = result.replace("{","");
+                result = result.replace("\"id\":","");
+                result = result.replace("\"name\":","");
+                result = result.replace("\"melody\":","");
+                Log.d("OkHttp result",result);
+                String[] str = result.split(";");
+                for(String s:str){
+                    String[] ss = s.split(",");
+                    Data d = new Data(Integer.parseInt(ss[0]),ss[1],ss[2]);
+                    testData.add(d);
+                }
+
+
+            }
+        });
+
     }
+
 
     private class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
@@ -73,10 +125,12 @@ public class HomeFragment extends Fragment {
         public class MyViewHolder extends RecyclerView.ViewHolder {
             public View itemView;
             public TextView name;
+            public ImageButton play;
             public MyViewHolder(@NonNull View v) {
                 super(v);
                 itemView = v;
                 name = itemView.findViewById(R.id.tv_musicname);
+                play = itemView.findViewById(R.id.btn_musicplay);
 
             }
         }
@@ -94,7 +148,18 @@ public class HomeFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull MyAdapter.MyViewHolder holder, int position) {
-            holder.name.setText(String.valueOf(testData.get(position).id));
+            holder.name.setText(String.valueOf(testData.get(position).name));
+
+
+
+            holder.play.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    play_music(testData.get(holder.getAdapterPosition()).name);
+
+                }
+            });
         }
 
         @Override
@@ -105,5 +170,34 @@ public class HomeFragment extends Fragment {
 
 
     }
+
+    int[] raw_music = {R.raw.turmpetc,R.raw.turmpetd,R.raw.turmpete
+            ,R.raw.turmpetf,R.raw.turmpetg,R.raw.turmpeta,R.raw.turmpetb,R.raw.turmpet0c,R.raw.turmpet0d,R.raw.turmpet0e};
+    public void play_music(String s){
+        int slen = s.length();
+
+       int count = 0;
+       for (int i = 0;i<slen;i++){
+           MediaPlayer player = MediaPlayer.create(getContext()
+                   ,raw_music[Integer.parseInt(String.valueOf(s.charAt(i)))]);
+            player.start();
+            do{
+                player.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                    @Override
+                    public void onPrepared(MediaPlayer mediaPlayer) {
+
+                    }
+                });
+            }while (player.isPlaying());
+           player.stop();
+           player.release();
+       }
+
+
+    }
+
+
+
+
 
 }
