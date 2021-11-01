@@ -1,7 +1,5 @@
 package tw.edu.nfu.gm.hsueh.musicalkeyboard.ui.keyboards;
 
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,17 +15,14 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.io.IOException;
-import java.security.Key;
+import java.lang.reflect.Method;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import tw.edu.nfu.gm.hsueh.musicalkeyboard.MainActivity;
 import tw.edu.nfu.gm.hsueh.musicalkeyboard.R;
 
 public class KeyboardsFragment extends Fragment {
@@ -36,10 +30,8 @@ public class KeyboardsFragment extends Fragment {
     private Button musicbutton1, musicbutton2, musicbutton3, musicbutton4, musicbutton5, musicbutton6, musicbutton7, musicbutton8, musicbutton9, musicbutton10;
     private KeyboardsViewModel keyboardsViewModel;
     private MediaPlayer mp1, mp2, mp3, mp4, mp5, mp6, mp7, mp8, mp9, mp10;
-    private Boolean on_record = false;
     private String melody, temp_melody;
-    // 建立OkHttpClient
-    OkHttpClient client = new OkHttpClient().newBuilder().build();
+
 
     private class Data {
         int id;
@@ -52,6 +44,8 @@ public class KeyboardsFragment extends Fragment {
         keyboardsViewModel = new ViewModelProvider(this).get(KeyboardsViewModel.class);
         View root = inflater.inflate(R.layout.fragment_keyboard, container, false);
 
+        // 建立OkHttpClient
+        OkHttpClient client = new OkHttpClient().newBuilder().build();
         Button btn_record = (Button) root.findViewById(R.id.btn_record);
         Button btn_replay = (Button) root.findViewById(R.id.btn_replay);
         Button btn_upload = (Button) root.findViewById(R.id.btn_upload);
@@ -165,11 +159,9 @@ public class KeyboardsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (btn_record.getText() == "RECORD") {
-                    on_record = true;
                     temp_melody = "";
                     btn_record.setText("RECORDING");
                 } else {
-                    on_record = false;
                     melody = temp_melody;
                     btn_record.setText("RECORD");
                 }
@@ -188,8 +180,9 @@ public class KeyboardsFragment extends Fragment {
         btn_upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (melody != "") {
-                    String url = "http://140.130.36.85/api/" + melody;
+                if(melody!=""){
+                    String url = "https://c91a-2001-288-6004-36-6c9e-f855-de1f-69c3.ngrok.io/api/";
+                    url += melody;
                     // 建立Request，設置連線資訊
                     Request request = new Request.Builder()
                             .url(url)
@@ -203,17 +196,19 @@ public class KeyboardsFragment extends Fragment {
 
 
                         @Override
-                        public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                            Log.d("response:", response.body().string());
+                        public void onResponse(Call call, Response response) throws IOException {
+
                         }
 
                         @Override
-                        public void onFailure(@NotNull Call call, @NotNull IOException e) {
+                        public void onFailure(Call call, IOException e) {
 
                         }
 
                     });
+                    melody = "";
                 }
+
             }
         });
 
